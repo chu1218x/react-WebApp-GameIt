@@ -14,7 +14,6 @@ function Project() {
 
     return (
         <div className='container-fluid'>
-            <pre>{JSON.stringify(process.env, null, 2)}</pre>
             <div className='row'>
                 <div className='col-2'>
                     <div className="list-group">
