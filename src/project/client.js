@@ -8,3 +8,15 @@ export const findGames = async (page, pageSize) => {
         (`${RAWG_API}/games?key=${API_KEY}&page=${page}&page_size=${pageSize}`);
     return response.data.results;
 };
+
+export const searchGames = async (searchTerm) => {
+    const response = await axios.get(`${RAWG_API}/games?key=${API_KEY}&search=${searchTerm}`);
+    return response.data.results; 
+};
+
+
+export const getGameDetails = async (gameId) => {
+    const response = await axios.get(`${RAWG_API}/games/${gameId}?key=${API_KEY}`);
+    return response.data;
+};
+
