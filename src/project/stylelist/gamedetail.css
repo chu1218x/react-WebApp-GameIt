@@ -1,0 +1,31 @@
+.detailsContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    max-width: 1200px; 
+}
+
+
+.leftColumn {
+    flex: 1;
+    padding-right: 20px; 
+}
+
+
+.rightColumn {
+    flex: 1;
+}
+
+.videoPlayer {
+    width: 100%;
+    height: auto; 
+}
+
+.gameScreenshot {
+    width: 100%; 
+    height: auto; 
+    max-height: 200px; 
+    object-fit: cover; 
+    margin-bottom: 10px; 
+}
+
