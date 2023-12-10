@@ -20,3 +20,12 @@ export const getGameDetails = async (gameId) => {
     return response.data;
 };
 
+export const getGameMovies = async (gameId) => {
+    const response = await axios.get(`${RAWG_API}/games/${gameId}/movies?key=${API_KEY}`);
+    return response.data;
+}
+
+export const getGameScreenshots = async (slug) => {
+    const response = await axios.get(`${RAWG_API}/games/${slug}/screenshots?key=${API_KEY}`);
+    return response.data;
+}
