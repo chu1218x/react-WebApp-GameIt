@@ -1,9 +1,15 @@
 import * as client from './client';
 import { Link } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 function UserList() {
     const [users, setUsers] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+
+    const fetchUser = async () => {
+        const user = await client.account();
+        setCurrentUser(user);
+    }
     const fetchUsers = async () => {
         const results = await client.findAllUsers();
         setUsers(results);
@@ -11,20 +17,31 @@ function UserList() {
 
     useEffect(() => {
         fetchUsers();
+        fetchUser();
     }, []);
 
     return (
         <div>
-            <h1>User List</h1>
-            <div className="list-group">
-                {users.map((user) => (
-                    <Link key={user._id}
-                        to={`/project/user/${user._id}`}
-                        className="list-group-item">
-                        {user.username}
-                    </Link>
-                ))}
-            </div>
+            {currentUser && currentUser.role === 'ADMIN' && (
+                <>
+                    <h1>User List</h1>
+                    <div className="list-group">
+                        {users.map((user) => (
+                            <Link key={user._id}
+                                to={`/project/user/${user._id}`}
+                                className="list-group-item">
+                                {user.username}
+                            </Link>
+                        ))}
+                    </div>
+                </>
+            )}
+            {currentUser && currentUser.role !== 'ADMIN' && (
+                <div>
+                    <h2>Access Denied</h2>
+                    <h2>Admin Only</h2>
+                </div>
+            )}
         </div>
 
     );

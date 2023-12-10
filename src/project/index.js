@@ -27,8 +27,6 @@ function Project() {
                             Sign up</Link>
                         <Link to="/project/account" className="list-group-item list-group-item-action" >
                             Account</Link>                  
-                        <Link to="/project/users" className="list-group-item list-group-item-action" >
-                            User List</Link>
                         <Link to="/project/gamelist" className="list-group-item list-group-item-action" >
                             All Games</Link>
                     </div>

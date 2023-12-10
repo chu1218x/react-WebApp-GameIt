@@ -16,14 +16,12 @@ function SignIn() {
         } catch (error) {
             setError(error);
         }
-    }
+
+    };
 
     return (
         <div>
             <h1>Sign In</h1>
-            {error && <div className='alert alert-danger'>
-                {error.message}
-            </div>}
             <input
                 type='text'
                 className='form-control'
@@ -31,7 +29,6 @@ function SignIn() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
-
             <input
                 type='password'
                 className='form-control'
