@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
+import Nav from './nav';
 import Signup from './signup';
 import Account from './users/account';
 import GameList from './gamelist';
@@ -16,20 +17,8 @@ function Project() {
         <div className='container-fluid'>
             <h1>Game It</h1>
             <div className='row'>
-                <div className='col-2'>
-                    <div className="list-group">
-                        <Link to="/project" className="list-group-item list-group-item-action" >
-                            Home</Link>
-                        <Link to="/project/signin" className="list-group-item list-group-item-action" >
-                            Sign In</Link>
-                        <Link to="/project/signup" className="list-group-item list-group-item-action" >
-                            Sign up</Link>
-                        <Link to="/project/account" className="list-group-item list-group-item-action" >
-                            Account</Link>                  
-                        <Link to="/project/gamelist" className="list-group-item list-group-item-action" >
-                            All Games</Link>
-                    </div>
-                </div>
+                <Nav />
+
                 <div className='col-10'>
                     <Routes>
                         <Route path="/" element={<Home />} />

@@ -53,7 +53,6 @@ function Details() {
                                 src={gameDetails.background_image}
                                 alt={`${gameDetails.name} Background`}
                                 className="gameBackgroundImage"
-                                style={{ width: "500px" }}
                             />
                         )}
                         <h2>{gameDetails.name}</h2>
