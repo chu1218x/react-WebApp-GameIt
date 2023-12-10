@@ -62,7 +62,7 @@ h2 {
 }
 
 .list-group-item:hover, .list-group-item-action.active {
-    background-color: #ff4500; /* Highlight color for hover and active items */
+    background-color: rgb(11, 142, 98);
     color: #ffffff;
 }
 
@@ -74,5 +74,5 @@ a {
 }
 
 a:hover {
-    color: #ff4500; /* Highlight color for link hover */
+    color: rgb(11, 142, 98);
 }
