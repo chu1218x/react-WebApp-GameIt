@@ -9,7 +9,6 @@ import UserList from './users/list';
 import UserDetails from './users/details';
 import Home from './home';
 import SignIn from './users/signin';
-import './stylelist/index.css';
 
 function Project() {
 
@@ -19,7 +18,7 @@ function Project() {
             <div className='row'>
                 <div className='col-2'>
                     <div className="list-group">
-                        <Link to="/" className="list-group-item list-group-item-action" >
+                        <Link to="/project/home" className="list-group-item list-group-item-action" >
                             Home</Link>
                         <Link to="/project/signin" className="list-group-item list-group-item-action" >
                             Sign In</Link>
@@ -33,7 +32,7 @@ function Project() {
                 </div>
                 <div className='col-10'>
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/home" element={<Home />} />
                         <Route path="/signin" element={<SignIn />} />
                         <Route path="/signup" element={<Signup />} />
                         <Route path="/account" element={<Account />} />
