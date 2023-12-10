@@ -29,11 +29,6 @@
     transition: color 0.3s ease; /* Transition for hover effect */
 }
 
-.game-card:hover h2 {
-    color: #ffcc00;
-    transform: scale(1.05); /* Slightly increase the size */
-}
-
 
 .game-card-title {
     position: absolute;
@@ -41,7 +36,7 @@
     left: 0;
     width: 100%;
     background: rgba(0, 0, 0, 0.75); /* Semi-transparent overlay */
-    color: white;
+    color: rgb(255, 255, 255);
     text-align: center;
     padding: 10px 0; /* Padding for the title bar */
     transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for the title */

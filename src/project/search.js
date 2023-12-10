@@ -14,7 +14,7 @@ function Search() {
         const results = await client.searchGames(searchTerm, gamesPerPage);
         setResults(results);
         setSearchTerm(searchTerm);
-        navigate(`/project/search/${searchTerm}`);
+        navigate(`/search/${searchTerm}`);
     }
 
     useEffect(() => {
@@ -42,7 +42,7 @@ function Search() {
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '100px' }}>
                 {results && results.map((game) => (
-                    <Link to={`/project/details/${game.id}`} key={game.id} className="game-card-link" style={{ textDecoration: 'none' }}>
+                    <Link to={`/details/${game.id}`} key={game.id} className="game-card-link" style={{ textDecoration: 'none' }}>
                         <div className="game-card">
                             <img src={game.background_image || "path_to_default_image.png"} alt={game.name} />
                             <div className="game-card-title">

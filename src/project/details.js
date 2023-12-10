@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import * as client from './client';
 import "../project/stylelist/gamedetail.css";
+import Carousel from './carousel';
+
 
 function Details() {
     const { gameId } = useParams();
@@ -41,12 +43,23 @@ function Details() {
             {gameDetails ? (
                 <>
                     <div className="leftColumn">
+                        {gameMovies.length > 0 ? (
+                            <video className="videoPlayer" controls autoPlay muted>
+                                <source src={gameMovies[0].data.max} type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        ) : (
+                            <img
+                                src={gameDetails.background_image}
+                                alt={`${gameDetails.name} Background`}
+                                className="gameBackgroundImage"
+                                style={{ width: "500px" }}
+                            />
+                        )}
                         <h2>{gameDetails.name}</h2>
-                        <img src={gameDetails.background_image}
-                            alt={gameDetails.name}
-                            style={{ width: "500px" }}
 
-                        />
+                        <button>add to myGame</button>
+                        <br />
                         <h3>Description</h3>
                         <div>
                             {showFullDescription ? (
@@ -58,6 +71,7 @@ function Details() {
                                 {showFullDescription ? 'Read Less' : 'Read More'}
                             </button>
                         </div>
+                        <br />
                         <p>Released: {gameDetails.released}</p>
                         <p>Ratings: {gameDetails.ratings.map(rating => rating.title).join(', ')}</p>
                         <p>Platforms: {gameDetails.platforms.map(platform => platform.platform.name).join(', ')}</p>
@@ -66,22 +80,17 @@ function Details() {
                         <p>Tags: {gameDetails.tags.map(tag => tag.name).join(', ')}</p>
                         <p>Publishers: {gameDetails.publishers.map(publisher => publisher.name).join(', ')}</p>
 
-
                     </div>
 
                     <div className="rightColumn">
-                        {gameMovies.length > 0 && (
-                            <video className="videoPlayer" controls autoPlay muted>
-                                <source src={gameMovies[0].data.max} type="video/mp4" />
-                                Your browser does not support the video tag.
-                            </video>
-                        )}
                         <div className="gameScreenshots">
-                            {gameScreenshots.map(screenshot => (
-                                <img key={screenshot.id} src={screenshot.image} alt="Game Screenshot" className="gameScreenshot" />
-                            ))}
+                            {gameScreenshots.length > 0 && (
+                                <Carousel screenshots={gameScreenshots} />
+                            )}
                         </div>
+
                     </div>
+
 
                 </>
             ) : (

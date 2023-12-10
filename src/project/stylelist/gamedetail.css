@@ -14,18 +14,16 @@
 
 .rightColumn {
     flex: 1;
-}
-
-.videoPlayer {
-    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    overflow: hidden; 
+  }
+  
+  .videoPlayer {
+    max-width: 100%;
     height: auto; 
-}
-
-.gameScreenshot {
-    width: 100%; 
-    height: auto; 
-    max-height: 200px; 
-    object-fit: cover; 
-    margin-bottom: 10px; 
-}
-
+    margin-bottom: 20px; 
+  }
+  
+  
