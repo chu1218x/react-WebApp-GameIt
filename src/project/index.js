@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import Nav from './nav';
 import Signup from './users/signup';
@@ -13,9 +13,26 @@ import SignIn from './users/signin';
 
 function Project() {
 
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('currentUser');
+        if (storedUser) {
+            setCurrentUser(JSON.parse(storedUser));
+        }
+    }, []);
+
     return (
         <div className='container-fluid'>
-            <h1>Game It</h1>
+             <div className="d-flex justify-content-between align-items-center">
+                <h1>Game It</h1>
+                {currentUser && (
+                    <h3>
+                        Welcome, <Link to={`/project/users/${currentUser._id}`} style={{ textDecoration: 'underline' }}>{currentUser.username}</Link>
+                    </h3>
+                )}
+            </div>
+
             <div className='row'>
                 <Nav />
 
@@ -30,7 +47,7 @@ function Project() {
                         <Route path="/details/:gameId" element={<Deatils />} />
                         <Route path='/gamelist' element={<GameList />} />
                         <Route path='/users' element={<UserList />} />
-                        <Route path='/user/:userId' element={<UserDetails />} />
+                        <Route path='/users/:userId' element={<UserDetails />} />
                     </Routes>
                 </div>
             </div>

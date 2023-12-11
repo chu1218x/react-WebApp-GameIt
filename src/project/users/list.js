@@ -16,9 +16,13 @@ function UserList() {
     };
 
     useEffect(() => {
+        const storedUser = localStorage.getItem('currentUser');
+        if (storedUser) {
+            setCurrentUser(JSON.parse(storedUser));
+        }
         fetchUsers();
-        fetchUser();
     }, []);
+
 
     return (
         <div>
@@ -28,7 +32,7 @@ function UserList() {
                     <div className="list-group">
                         {users.map((user) => (
                             <Link key={user._id}
-                                to={`/project/user/${user._id}`}
+                                to={`/project/users/${user._id}`}
                                 className="list-group-item">
                                 {user.username}
                             </Link>
