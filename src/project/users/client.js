@@ -22,10 +22,10 @@ export const signUp = async (user) => {
     return response.data;
 }
 
-export const account = async () => {
-    const response = await request.post(`${USERS_API}/account`);
-    return response.data;
-}   
+// export const account = async () => {
+//     const response = await request.post(`${USERS_API}/account`);
+//     return response.data;
+// }   
 
 export const findAllUsers = async () => {
     const response = await request.get(USERS_API);

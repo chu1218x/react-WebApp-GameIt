@@ -20,7 +20,7 @@ function UserDetails() {
         fetchUser();
     }, []);
 
-    
+
     const canEdit = currentUser && user &&
         (currentUser._id === user._id || currentUser.role === 'ADMIN');
 
@@ -40,6 +40,13 @@ function UserDetails() {
     const deleteUser = async (userId) => {
         const status = await client.deleteUser(userId);
         navigate('/project/users');
+    }
+
+    const signout = async () => {
+        const status = await client.signOut();
+        localStorage.removeItem('currentUser');
+        setCurrentUser(null); 
+        navigate('/project');
     }
 
     useEffect(() => {
@@ -78,6 +85,11 @@ function UserDetails() {
                 {canEdit && !editMode && (
                     <button onClick={() => setEditMode(true)} className='btn btn-primary'>Edit</button>
                 )}
+                  {currentUser && (
+                <button onClick={signout} className="btn btn-secondary">
+                    Sign Out
+                </button>
+            )}
 
                 {editMode && (
                     <div>
@@ -90,7 +102,10 @@ function UserDetails() {
                 {isAdmin && (
                     <Link to="/project/users" className="btn btn-warning">Users</Link>
                 )}
-            </div>}
+            </div>
+            
+            }
+
         </div>
     );
 }

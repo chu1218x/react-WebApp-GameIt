@@ -14,7 +14,7 @@ function SignIn() {
             const user = await client.signIn(credentials);
             localStorage.setItem('currentUser', JSON.stringify(user));
 
-            navigate('/project/account');
+            navigate('/project');
         } catch (error) {
             setError(error);
         }

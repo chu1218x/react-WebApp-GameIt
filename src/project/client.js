@@ -29,3 +29,8 @@ export const getGameScreenshots = async (slug) => {
     const response = await axios.get(`${RAWG_API}/games/${slug}/screenshots?key=${API_KEY}`);
     return response.data;
 }
+
+export const findAllCreators = async () => {
+    const response = await axios.get(`${RAWG_API}/creators?key=${API_KEY}`);
+    return response.data.results;
+}

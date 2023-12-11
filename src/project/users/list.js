@@ -6,10 +6,10 @@ function UserList() {
     const [users, setUsers] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
 
-    const fetchUser = async () => {
-        const user = await client.account();
-        setCurrentUser(user);
-    }
+    // const fetchUser = async () => {
+    //     const user = await client.account();
+    //     setCurrentUser(user);
+    // }
     const fetchUsers = async () => {
         const results = await client.findAllUsers();
         setUsers(results);

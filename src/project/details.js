@@ -23,14 +23,14 @@ function Details() {
         setGameScreenshots(screenshots.results);
     }
 
-    const fetchUser = async () => {
-        try {
-            const user = await userClient.account();
-            setCurrentUser(user);
-        } catch (error) {
-            setCurrentUser(null);
-        }
-    }
+    // const fetchUser = async () => {
+    //     try {
+    //         const user = await userClient.account();
+    //         setCurrentUser(user);
+    //     } catch (error) {
+    //         setCurrentUser(null);
+    //     }
+    // }
 
     const getMovie = async () => {
         const movie = await likesClient.findUsersThatLikeMovie(gameId);
@@ -95,14 +95,14 @@ function Details() {
     useEffect(() => {
         fetchData(gameId);
         getMovie();
-        fetchUser();
-    }, [gameId]); // 仅当 gameId 改变时触发
+   
+    }, [gameId]); 
 
     useEffect(() => {
         if (currentUser) {
             checkIfUserLikedGame();
         }
-    }, [currentUser]); // 仅当 currentUser 改变时触发
+    }, [currentUser]); 
 
 
     return (

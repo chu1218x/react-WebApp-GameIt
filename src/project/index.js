@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link, useLocation } from 'react-router-dom';
 import Nav from './nav';
 import Signup from './users/signup';
 import GameList from './gamelist';
@@ -9,26 +9,33 @@ import UserList from './users/list';
 import UserDetails from './users/details';
 import Home from './home';
 import SignIn from './users/signin';
+import Creators from './creators';
 
 function Project() {
 
     const [currentUser, setCurrentUser] = useState(null);
+    const location = useLocation();
 
     useEffect(() => {
         const storedUser = localStorage.getItem('currentUser');
         if (storedUser) {
             setCurrentUser(JSON.parse(storedUser));
+        } else {
+            setCurrentUser(null);
         }
-    }, []);
+    }, [location]); 
+
 
     return (
         <div className='container-fluid'>
-             <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center">
                 <h1>Game It</h1>
-                {currentUser && (
+                {currentUser ? (
                     <h3>
                         Welcome, <Link to={`/project/users/${currentUser._id}`} style={{ textDecoration: 'underline' }}>{currentUser.username}</Link>
                     </h3>
+                ) : (
+                    <h3>Welcome, guest</h3>
                 )}
             </div>
 
@@ -47,6 +54,7 @@ function Project() {
                         <Route path='/gamelist' element={<GameList />} />
                         <Route path='/users' element={<UserList />} />
                         <Route path='/users/:userId' element={<UserDetails />} />
+                        <Route path='/creators' element={<Creators />} />
                     </Routes>
                 </div>
             </div>

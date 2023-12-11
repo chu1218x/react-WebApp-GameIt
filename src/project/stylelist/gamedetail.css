@@ -1,14 +1,14 @@
 .detailsContainer {
   display: flex;
-  flex-direction: row; /* 横向排列 */
+  flex-direction: row; 
   margin: 0 auto;
   max-width: 1200px; 
 }
 
 .leftColumn, .rightColumn {
-  flex: 1; /* 让两列平等分配空间 */
-  padding: 10px; /* 添加一些内边距 */
-  box-sizing: border-box; /* 包含边框和内边距在内的总宽度 */
+  flex: 1; 
+  padding: 10px; 
+  box-sizing: border-box; 
 }
 
 .leftColumn {
@@ -28,20 +28,19 @@
   margin-bottom: 20px; 
 }
 
-/* 对小屏幕的适配 */
 @media (max-width: 768px) {
   .detailsContainer {
-      flex-direction: column; /* 在小屏幕上改为纵向排列 */
+      flex-direction: column; 
   }
 
   .leftColumn, .rightColumn {
-      flex: none; /* 取消伸缩行为 */
-      width: 100%; /* 让每列宽度占满容器 */
+      flex: none; 
+      width: 100%; 
   }
 }
 
 .gameBackgroundImage {
-  max-width: 500px; /* 最大宽度为500px */
-  width: 100%; /* 宽度默认为容器的100% */
-  height: auto; /* 高度自动调整以保持宽高比 */
+  max-width: 500px; 
+  width: 100%;
+  height: auto; 
 }

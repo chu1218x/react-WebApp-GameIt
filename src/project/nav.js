@@ -14,6 +14,8 @@ function Nav() {
                     Sign up</Link>
                 <Link to="/project/gamelist" className="list-group-item list-group-item-action" >
                     All Games</Link>
+                <Link to="/project/creators" className="list-group-item list-group-item-action" >
+                    Creators</Link>
             </div>
         </div>
     );
