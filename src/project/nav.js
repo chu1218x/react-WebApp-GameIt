@@ -12,8 +12,6 @@ function Nav() {
                     Sign In</Link>
                 <Link to="/project/signup" className="list-group-item list-group-item-action" >
                     Sign up</Link>
-                <Link to="/project/account" className="list-group-item list-group-item-action" >
-                    Account</Link>
                 <Link to="/project/gamelist" className="list-group-item list-group-item-action" >
                     All Games</Link>
             </div>

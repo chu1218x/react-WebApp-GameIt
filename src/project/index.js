@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import Nav from './nav';
 import Signup from './users/signup';
-import Account from './users/account';
 import GameList from './gamelist';
 import Search from './search';
 import Deatils from './details';
@@ -41,7 +40,7 @@ function Project() {
                         <Route path="/" element={<Home />} />
                         <Route path="/signin" element={<SignIn />} />
                         <Route path="/signup" element={<Signup />} />
-                        <Route path="/account" element={<Account />} />
+                        {/* <Route path="/account" element={<Account />} /> */}
                         <Route path="/search" element={<Search />} />
                         <Route path="/search/:search" element={<Search />} />
                         <Route path="/details/:gameId" element={<Deatils />} />
