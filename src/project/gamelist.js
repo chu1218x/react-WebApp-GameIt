@@ -7,7 +7,7 @@ import "../project/stylelist/gamelist.css";
 function GameList() {
     const [games, setGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [gamesPerPage] = useState(30);
+    const [gamesPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
 

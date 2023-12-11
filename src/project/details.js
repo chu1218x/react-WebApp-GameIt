@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import * as client from './client';
 import "../project/stylelist/gamedetail.css";
 import Carousel from './carousel';
+import * as userClient from './users/client';
+import * as likesClient from './likes/client';
 
 
 function Details() {
@@ -11,11 +13,48 @@ function Details() {
     const [gameMovies, setGameMovies] = useState([]);
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [gameScreenshots, setGameScreenshots] = useState([]);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [movie, setMovie] = useState(null);
+    const [likes, setLikes] = useState([]);
 
     const fetchGameScreenshots = async (slug) => {
         const screenshots = await client.getGameScreenshots(slug);
         setGameScreenshots(screenshots.results);
     }
+
+    const fetchUser = async () => {
+        try {
+            const user = await userClient.account();
+            setCurrentUser(user);
+        } catch (error) {
+            setCurrentUser(null);
+        }
+    }
+
+    const getMovie = async () => {
+        const movie = await likesClient.findUsersThatLikeMovie(gameId);
+        setMovie(movie);
+    }
+
+    const currentUserlikeMovie = async () => {
+        try {
+            await likesClient.createUserLikesMovie(currentUser._id, gameId);
+            await fetchLikes();
+        } catch (error) {
+            console.error("Error adding like", error);
+        }
+    };
+    
+
+    const fetchLikes = async () => {
+        const newLikes = await likesClient.findUsersThatLikeMovie(gameId);
+        const uniqueLikes = newLikes.filter((like, index, self) =>
+            index === self.findIndex((t) => t.user._id === like.user._id)
+        );
+        setLikes(uniqueLikes);
+    };
+    
+
 
     useEffect(() => {
         async function fetchData() {
@@ -35,6 +74,9 @@ function Details() {
         }
 
         fetchData();
+        getMovie();
+        fetchUser();
+        fetchLikes();
     }, [gameId]);
 
 
@@ -56,8 +98,12 @@ function Details() {
                             />
                         )}
                         <h2>{gameDetails.name}</h2>
-
-                        <button>add to myGame</button>
+                        {currentUser && (
+                            <button className='btn btn-danger float-end'
+                                onClick={currentUserlikeMovie}>
+                                Like
+                            </button>)
+                        }
                         <br />
                         <h3>Description</h3>
                         <div>
@@ -87,8 +133,20 @@ function Details() {
                                 <Carousel screenshots={gameScreenshots} />
                             )}
                         </div>
+                        <br />
+                        <h2>likes By:</h2>
+                        <ul className="list-group">
+                            {likes.map((like, index) => (
+                                <li key={index} className="list-group-item"  >
+                                    <Link to={`/project/users/${like.user._id}`} >
+                                        <p> {like.user.username} </p>
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
 
                     </div>
+
 
 
                 </>

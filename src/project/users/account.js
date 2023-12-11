@@ -1,11 +1,10 @@
 import * as client from './client';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 function Account() {
-
-    const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
     const fetchUser = async () => {
         try {
             const user = await client.account();
@@ -18,7 +17,7 @@ function Account() {
 
     const updateUser = async () => {
         const status = await client.updateUser(user._id, user);
-    };
+    }
 
     const signout = async () => {
         const status = await client.signOut();
@@ -31,46 +30,50 @@ function Account() {
     }, []);
 
     return (
-        <div>
+        <div className="container-fluid">
             <h1>Account</h1>
             {user && (
                 <div>
-                    <p>User Name : {user.username}</p>
-                    <p>Email :
+                    <p>Username : {user.username}</p>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <p style={{ margin: 0, marginRight: "10px" }}>email:</p>
                         <input
-                            type='email'
-                            className='form-control'
+                            type="email"
+                            className="form-control"
                             value={user.email}
                             onChange={(e) => setUser({ ...user, email: e.target.value })}
                         />
-                    </p>
-                    <p>First Name :
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <p style={{ margin: 0, marginRight: "10px" }}>firstName:</p>
                         <input
-                            type='text'
-                            className='form-control'
+                            type="text"
+                            className="form-control"
                             value={user.firstName}
                             onChange={(e) => setUser({ ...user, firstName: e.target.value })}
                         />
-                    </p>
-                    <p>Last Name :
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <p style={{ margin: 0, marginRight: "10px" }}>lastName:</p>
                         <input
-                            type='text'
-                            className='form-control'
+                            type="text"
+                            className="form-control"
                             value={user.lastName}
                             onChange={(e) => setUser({ ...user, lastName: e.target.value })}
                         />
-                    </p>
-                    <p>Role:{user.role}</p>
-                    <button onClick={updateUser} className='btn btn-primary'>Update</button>
-                    <button onClick={signout} className='btn btn-danger'>Sign Out</button>
-                    {user.role === 'ADMIN' && (
-                        <Link to={`/project/users`} className='btn btn-warning'>Users</Link>
-                    )}
-                </div>
+                    </div>
+                    <p>Role : {user.role}</p>
+                    <button className="btn btn-primary" onClick={updateUser}>Update</button>
+                    <button className="btn btn-danger" onClick={signout}>Sign Out</button>
+                    {
+                        user.role === 'ADMIN' && (
+                            <Link to="/project/users" className="btn btn-warning">Users</Link>
+                        )
+                    }                
+                    </div>
             )}
         </div>
     )
 }
 
 export default Account;
-

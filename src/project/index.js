@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import Nav from './nav';
-import Signup from './signup';
+import Signup from './users/signup';
 import Account from './users/account';
 import GameList from './gamelist';
 import Search from './search';
