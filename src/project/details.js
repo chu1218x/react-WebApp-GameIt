@@ -38,12 +38,14 @@ function Details() {
 
     const currentUserlikeMovie = async () => {
         try {
+            console.log("Sending Like: ", currentUser._id, gameId);
             await likesClient.createUserLikesMovie(currentUser._id, gameId);
             await fetchLikes();
         } catch (error) {
             console.error("Error adding like", error);
         }
     };
+    
     
 
     const fetchLikes = async () => {
