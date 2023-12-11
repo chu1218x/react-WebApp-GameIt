@@ -10,12 +10,13 @@ import * as likesClient from './likes/client';
 function Details() {
     const { gameId } = useParams();
     const [gameDetails, setGameDetails] = useState(null);
-    const [gameMovies, setGameMovies] = useState([]);
+    const [gameMovies, setGameMovies] = useState([]);ß
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [gameScreenshots, setGameScreenshots] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
     const [movie, setMovie] = useState(null);
     const [likes, setLikes] = useState([]);
+    const [hasLiked, setHasLiked] = useState(false);
 
     const fetchGameScreenshots = async (slug) => {
         const screenshots = await client.getGameScreenshots(slug);
@@ -36,17 +37,52 @@ function Details() {
         setMovie(movie);
     }
 
-    const currentUserlikeMovie = async () => {
-        try {
-            console.log("Sending Like: ", currentUser._id, gameId);
-            await likesClient.createUserLikesMovie(currentUser._id, gameId);
-            await fetchLikes();
-        } catch (error) {
-            console.error("Error adding like", error);
+    const fetchData = async (gameId) => {
+        const details = await client.getGameDetails(gameId);
+        setGameDetails(details);
+
+        const movies = await client.getGameMovies(gameId);
+        setGameMovies(movies.results.length > 0 ? [movies.results[0]] : []);
+
+        if (details) {
+            await fetchGameScreenshots(details.slug);
         }
+        await fetchLikes();
     };
-    
-    
+
+    const checkIfUserLikedGame = async () => {
+        const userLikes = await likesClient.findUsersThatLikeMovie(gameId);
+        const userLikedGame = userLikes.filter((like) => like.user._id === currentUser._id);
+        if (userLikedGame.length > 0) {
+            setHasLiked(true);
+        } else {
+            setHasLiked(false);
+        }
+
+    };
+
+    const handleLikeClick = async () => {
+        if (hasLiked) {
+            // Logic to remove like
+            try {
+                await likesClient.deleteUserLikesMovie(currentUser._id, gameId);
+                setHasLiked(false);
+            } catch (error) {
+                console.error("Error removing like", error);
+            }
+        } else {
+            // Logic to add like
+            try {
+                await likesClient.createUserLikesMovie(currentUser._id, gameId);
+                setHasLiked(true);
+            } catch (error) {
+                console.error("Error adding like", error);
+            }
+        }
+        await fetchLikes();
+    };
+
+
 
     const fetchLikes = async () => {
         const newLikes = await likesClient.findUsersThatLikeMovie(gameId);
@@ -55,31 +91,18 @@ function Details() {
         );
         setLikes(uniqueLikes);
     };
-    
-
 
     useEffect(() => {
-        async function fetchData() {
-            const details = await client.getGameDetails(gameId);
-            setGameDetails(details);
-
-            const movies = await client.getGameMovies(gameId);
-            if (movies.results.length > 0) {
-                setGameMovies([movies.results[0]]);
-            } else {
-                setGameMovies([]);
-            }
-
-            if (details) {
-                await fetchGameScreenshots(details.slug);
-            }
-        }
-
-        fetchData();
+        fetchData(gameId);
         getMovie();
         fetchUser();
-        fetchLikes();
-    }, [gameId]);
+    }, [gameId]); // 仅当 gameId 改变时触发
+
+    useEffect(() => {
+        if (currentUser) {
+            checkIfUserLikedGame();
+        }
+    }, [currentUser]); // 仅当 currentUser 改变时触发
 
 
     return (
@@ -101,11 +124,13 @@ function Details() {
                         )}
                         <h2>{gameDetails.name}</h2>
                         {currentUser && (
-                            <button className='btn btn-danger float-end'
-                                onClick={currentUserlikeMovie}>
-                                Like
-                            </button>)
-                        }
+                            <button
+                                className={`btn float-end ${hasLiked ? 'btn-warning' : 'btn-success'}`}
+                                onClick={handleLikeClick}>
+                                {hasLiked ? 'Liked' : 'Like'}
+                            </button>
+
+                        )}
                         <br />
                         <h3>Description</h3>
                         <div>
@@ -114,7 +139,8 @@ function Details() {
                             ) : (
                                 <div dangerouslySetInnerHTML={{ __html: gameDetails.description.slice(0, 200) + '...' }} />
                             )}
-                            <button onClick={() => setShowFullDescription(!showFullDescription)}>
+                            <button className='btn btn-success'
+                            onClick={() => setShowFullDescription(!showFullDescription)}>
                                 {showFullDescription ? 'Read Less' : 'Read More'}
                             </button>
                         </div>
