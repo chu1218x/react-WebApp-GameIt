@@ -10,7 +10,7 @@ import * as likesClient from './likes/client';
 function Details() {
     const { gameId } = useParams();
     const [gameDetails, setGameDetails] = useState(null);
-    const [gameMovies, setGameMovies] = useState([]);ß
+    const [gameMovies, setGameMovies] = useState([]);
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [gameScreenshots, setGameScreenshots] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
