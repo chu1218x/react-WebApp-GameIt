@@ -5,12 +5,21 @@ const USERS_API = `${API_BASE}/api/users`;
 const LIKES_API = `${API_BASE}/api/likes`;
 
 
-export const createUserLikesMovie = async (userId, gameId) => {
-    const url = `${USERS_API}/${userId}/likes/${gameId}`;
+export const createUserLikesMovie = async (userId, gameData) => {
+    const url = `${USERS_API}/${userId}/likes`;
     console.log("Request URL: ", url);
-    const response = await axios.post(url);
-    return response.data;
+    console.log("Sending game data: ", gameData);
+
+    try {
+        const response = await axios.post(url, gameData);
+        console.log("Response received: ", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error in createUserLikesMovie: ", error);
+        throw error;  
+    }
 };
+
 
 export const deleteUserLikesMovie = async (userId, gameId) => {
     const response = await axios.delete(`${USERS_API}/${userId}/likes/${gameId}`);
