@@ -3,7 +3,6 @@ import { Link, useParams } from 'react-router-dom';
 import * as client from './client';
 import "../project/stylelist/gamedetail.css";
 import Carousel from './carousel';
-import * as userClient from './users/client';
 import * as likesClient from './likes/client';
 
 
@@ -14,23 +13,25 @@ function Details() {
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [gameScreenshots, setGameScreenshots] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
-    const [movie, setMovie] = useState(null);
+    const [, setMovie] = useState(null);
     const [likes, setLikes] = useState([]);
     const [hasLiked, setHasLiked] = useState(false);
+    const [showSignInPrompt, setShowSignInPrompt] = useState(false);
+
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('currentUser');
+        if (storedUser) {
+            setCurrentUser(JSON.parse(storedUser));
+        }
+    }, []); 
+
+
 
     const fetchGameScreenshots = async (slug) => {
         const screenshots = await client.getGameScreenshots(slug);
         setGameScreenshots(screenshots.results);
     }
-
-    // const fetchUser = async () => {
-    //     try {
-    //         const user = await userClient.account();
-    //         setCurrentUser(user);
-    //     } catch (error) {
-    //         setCurrentUser(null);
-    //     }
-    // }
 
     const getMovie = async () => {
         const movie = await likesClient.findUsersThatLikeMovie(gameId);
@@ -61,7 +62,14 @@ function Details() {
 
     };
 
+
     const handleLikeClick = async () => {
+
+        if (!currentUser) {
+            setShowSignInPrompt(true);
+            setTimeout(() => setShowSignInPrompt(false), 3000);
+            return;
+        }
         if (hasLiked) {
             // Logic to remove like
             try {
@@ -82,8 +90,6 @@ function Details() {
         await fetchLikes();
     };
 
-
-
     const fetchLikes = async () => {
         const newLikes = await likesClient.findUsersThatLikeMovie(gameId);
         const uniqueLikes = newLikes.filter((like, index, self) =>
@@ -95,14 +101,14 @@ function Details() {
     useEffect(() => {
         fetchData(gameId);
         getMovie();
-   
-    }, [gameId]); 
+
+    }, [gameId]);
 
     useEffect(() => {
         if (currentUser) {
             checkIfUserLikedGame();
         }
-    }, [currentUser]); 
+    }, [currentUser]);
 
 
     return (
@@ -123,14 +129,13 @@ function Details() {
                             />
                         )}
                         <h2>{gameDetails.name}</h2>
-                        {currentUser && (
-                            <button
-                                className={`btn float-end ${hasLiked ? 'btn-warning' : 'btn-success'}`}
-                                onClick={handleLikeClick}>
-                                {hasLiked ? 'Liked' : 'Like'}
-                            </button>
+                        <button
+                            className={`btn float-end ${hasLiked ? 'btn-warning' : 'btn-success'}`}
+                            onClick={handleLikeClick}>
+                            {hasLiked ? 'Remove from Favorites' : 'Add to Favorites'}
+                        </button>
+                        {showSignInPrompt && <p className="text-danger">This Action Requires Sign In First</p>}
 
-                        )}
                         <br />
                         <h3>Description</h3>
                         <div>
@@ -140,7 +145,7 @@ function Details() {
                                 <div dangerouslySetInnerHTML={{ __html: gameDetails.description.slice(0, 200) + '...' }} />
                             )}
                             <button className='btn btn-success'
-                            onClick={() => setShowFullDescription(!showFullDescription)}>
+                                onClick={() => setShowFullDescription(!showFullDescription)}>
                                 {showFullDescription ? 'Read Less' : 'Read More'}
                             </button>
                         </div>
@@ -174,8 +179,6 @@ function Details() {
                         </ul>
 
                     </div>
-
-
 
                 </>
             ) : (
