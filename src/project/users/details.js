@@ -24,7 +24,7 @@ function UserDetails() {
     const canEdit = currentUser && user &&
         (currentUser._id === user._id || currentUser.role === 'ADMIN');
 
-    const isAdmin = user && user.role === 'ADMIN';
+    const isAdmin = currentUser && currentUser.role === 'ADMIN';
 
     const fetchUser = async () => {
         const user = await client.findUserById(userId);

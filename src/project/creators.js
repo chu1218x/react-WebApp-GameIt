@@ -2,35 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import * as client from './client';
 import "../project/stylelist/creators.css";
+import axios from 'axios';
 
 function Creators() {
     const [creators, setCreators] = useState([]);
 
-    // useEffect(() => {
-    //     const fetchCreators = async () => {
-    //         try {
-    //             const data = await client.findAllCreators();
-    //             setCreators(data);
-    //         } catch (error) {
-    //             console.error("Error fetching creators:", error);
-    //         }
-    //     };
-
-    //     fetchCreators();
-    // }, []);
-
     useEffect(() => {
         const fetchCreators = async () => {
             try {
-                // 获取 RAWG API 的创作者数据
-                const rawgCreators = await client.findAllCreators();
-                
-                // 获取您的数据库中的创作者数据
-                const response = await fetch('/api/users/creators');
-                const dbCreators = await response.json();
-                
-                // 合并两个数组
-                const combinedCreators = [...rawgCreators, ...dbCreators];
+                // fetch data from RAWG API
+                const rawgData = await client.findAllCreators();
+
+                // fetch data from our own API  
+                const response = await axios.get('http://localhost:4000/api/creators');
+                const ownCreators = response.data;
+
+                // combine the two arrays
+                const combinedCreators = [...rawgData, ...ownCreators];
                 
                 setCreators(combinedCreators);
             } catch (error) {
@@ -40,6 +28,7 @@ function Creators() {
 
         fetchCreators();
     }, []);
+
 
     return (
         <div className="creators-container">
