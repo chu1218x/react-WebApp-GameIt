@@ -1,27 +1,24 @@
 import axios from "axios";
 
-const client = axios.create({
-    withCredentials: true,
-    baseURL: "http://localhost:4000/api/users",
-});
+const API_BASE = process.env.REACT_APP_API_BASE_URL || "http://localhost:3000";
+const USERS_API = `${API_BASE}/api/users`;
 
-export const userFollowsUser = async (follower, followed) => {
-    const response = await client.post(`/${follower}/follows/${followed}`);
+export const userFollowsUser = async (follower, followee) => {
+    const response = await axios.post(`${USERS_API}/${follower}/follows/${followee}`);
     return response.data;
 }
 
-export const userUnfollowsUser = async (follower, followed) => {
-    const response = await client.delete(`/${follower}/follows/${followed}`);
+export const userUnfollowsUser = async (follower, followee) => {
+    const response = await axios.delete(`${USERS_API}/${follower}/follows/${followee}`);
     return response.data;
 }
 
-export const findFollowersOfUser = async (followed) => {
-    const response = await client.get(`/${followed}/followers`);
+export const findFollowersOfUser = async (followee) => {
+    const response = await axios.get(`${USERS_API}/${followee}/follower`);
     return response.data;
 }
 
-export const findFollowedUsersByUser = async (follower) => {
-    const response = await client.get(`/${follower}/following`);
+export const findFolloweeOfUser = async (follower) => {
+    const response = await axios.get(`${USERS_API}/${follower}/followee`);
     return response.data;
 }
-

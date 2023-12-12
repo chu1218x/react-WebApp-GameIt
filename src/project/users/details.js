@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import * as client from './client';
 import * as likesClient from "../likes/client"
-import * as followsClient from "../follows/client"
 import { useState, useEffect } from 'react';
 import GameCard from '../gamecard';
 
@@ -16,8 +15,6 @@ function UserDetails() {
     const [currentUser, setCurrentUser] = useState(null);
     const [editMode, setEditMode] = useState(false);
 
-    const [isFollowing, setIsFollowing] = useState(false); // 新增状态，用于跟踪是否已关注用户
-
 
     useEffect(() => {
         const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -30,7 +27,7 @@ function UserDetails() {
     const canEdit = currentUser && user &&
         (currentUser._id === user._id || currentUser.role === 'ADMIN');
 
-    const isAdmin = currentUser && currentUser.role === 'ADMIN';
+    const isAdmin = user && user.role === 'ADMIN';
 
     const fetchUser = async () => {
         const user = await client.findUserById(userId);
@@ -57,7 +54,7 @@ function UserDetails() {
 
     const fetchLikedGames = async () => {
         const games = await likesClient.findMoviesLikedByUser(userId);
-        console.log("Fetched liked games:", games);
+        console.log("Fetched liked games:", games); 
         setLikedGames(games);
     };
 
@@ -66,36 +63,6 @@ function UserDetails() {
         fetchUser();
         fetchLikedGames();
     }, [userId]);
-
-    const checkFollowStatus = async () => {
-        if (currentUser && userId) {
-            try {
-                const followedUsers = await followsClient.findFollowedUsersByUser(currentUser._id);
-                const isAlreadyFollowing = followedUsers.some(user => user._id === userId);
-                setIsFollowing(isAlreadyFollowing);
-            } catch (error) {
-                console.error("Error checking follow status:", error);
-                // 可以在这里处理错误，例如设置一个错误状态，或显示一个错误消息
-            }
-        }
-    };
-
-
-    const handleFollow = async () => {
-        if (isFollowing) {
-            await followsClient.userUnfollowsUser(currentUser._id, userId);
-        } else {
-            await followsClient.userFollowsUser(currentUser._id, userId);
-        }
-        setIsFollowing(!isFollowing); // 更新关注状态
-    };
-
-    useEffect(() => {
-        // 检查当前用户是否已关注正在查看的用户
-        checkFollowStatus();
-        // 其他 useEffect 逻辑...
-    }, [userId, currentUser]);
-
 
 
     return (
@@ -150,12 +117,6 @@ function UserDetails() {
             )}
             <br />
 
-            {currentUser && userId !== currentUser._id && (
-                <button onClick={handleFollow}>
-                    {isFollowing ? 'Unfollow' : 'Follow'}
-                </button>
-            )}
-
             <div >
                 <h2>Favorite Games</h2>
                 <div className='game-card-container'>
@@ -166,7 +127,7 @@ function UserDetails() {
                                 name: game.gameTitle,
                                 background_image: game.backgroundImage,
                                 released: game.releaseDate,
-                                genres: game.genres
+                                genres: game.genres 
                             }} />
                         ))
                     ) : (
