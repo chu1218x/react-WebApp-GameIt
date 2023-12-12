@@ -54,7 +54,7 @@ function UserDetails() {
 
     const fetchLikedGames = async () => {
         const games = await likesClient.findMoviesLikedByUser(userId);
-        console.log("Fetched liked games:", games); 
+        console.log("Fetched liked games:", games);
         setLikedGames(games);
     };
 
@@ -97,11 +97,12 @@ function UserDetails() {
                     {canEdit && !editMode && (
                         <button onClick={() => setEditMode(true)} className='btn btn-primary'>Edit</button>
                     )}
-                    {currentUser && (
+                    {currentUser && user && currentUser._id === user._id && (
                         <button onClick={signout} className="btn btn-secondary">
                             Sign Out
                         </button>
                     )}
+
 
                     {editMode && (
                         <div>
@@ -127,7 +128,7 @@ function UserDetails() {
                                 name: game.gameTitle,
                                 background_image: game.backgroundImage,
                                 released: game.releaseDate,
-                                genres: game.genres 
+                                genres: game.genres
                             }} />
                         ))
                     ) : (
