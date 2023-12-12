@@ -10,7 +10,6 @@ import UserDetails from './users/details';
 import Home from './home';
 import SignIn from './users/signin';
 import Creators from './creators';
-import AddGame from './addgame';
 
 function Project() {
 
@@ -56,7 +55,6 @@ function Project() {
                         <Route path='/users' element={<UserList />} />
                         <Route path='/users/:userId' element={<UserDetails />} />
                         <Route path='/creators' element={<Creators />} />
-                        <Route path='/addgame' element={<AddGame />} />
                     </Routes>
                 </div>
             </div>
