@@ -70,11 +70,11 @@ function Signup() {
                 <label>
                     <input
                         type="radio"
-                        value="CREATOR"
-                        checked={credentials.role === "CREATOR"}
+                        value="TESTER"
+                        checked={credentials.role === "TESTER"}
                         onChange={handleRoleChange}
                     />
-                    Creator
+                    Game Tester
                 </label>
             </div>
 
