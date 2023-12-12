@@ -46,6 +46,8 @@ function GameList() {
             </form>
             <br />
             <h2>All Games</h2>
+            <Link to={`/project/addgame`}>
+                <p>Creator? Add a New Game!</p></Link>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '50px', marginTop: "30px" }}>
                 {games.map(game => (

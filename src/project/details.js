@@ -155,7 +155,7 @@ function Details() {
                                 </div>
                                 <br />
                                 <p>Released: {gameDetails.released}</p>
-                                <p>Ratings: {gameDetails.ratings.map(rating => rating.title).join(', ')}</p>
+                                <p>Rating: {gameDetails.rating}</p>
                                 <p>Platforms: {gameDetails.platforms.map(platform => platform.platform.name).join(', ')}</p>
                                 <p>Developers: {gameDetails.developers.map(developer => developer.name).join(', ')}</p>
                                 <p>Genres: {gameDetails.genres.map(genre => genre.name).join(', ')}</p>

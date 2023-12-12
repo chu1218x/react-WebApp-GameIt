@@ -120,7 +120,7 @@ function Signup() {
                         value={credentials.creatorInfo.name}
                         onChange={handleCreatorChange}
                     />
-                    {/* 添加更多 Creator 相关字段... */}
+                    
                     <p>Games Count:</p>
                     <input
                         type="number"

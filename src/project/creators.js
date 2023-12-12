@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import * as client from './client';
 import "../project/stylelist/creators.css";
 import axios from 'axios';
+import defaultImage from '../project/image/User_Avatar.png'; 
+
 
 function Creators() {
     const [creators, setCreators] = useState([]);
@@ -35,7 +37,9 @@ function Creators() {
             {creators.map(creator => (
                 <div key={creator.id} className="creator-card">
                     <div className="creator-image-container">
-                        <img src={creator.image} alt={creator.name} className="creator-image" />
+                        <img 
+                            src={creator.image || defaultImage} 
+                            alt={creator.name} className="creator-image" />
                     </div>
                     <div className="creator-info">
                         <h2 className="creator-name">{creator.name}</h2>
