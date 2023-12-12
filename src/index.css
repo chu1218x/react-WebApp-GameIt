@@ -14,7 +14,7 @@ body, html {
 .container-fluid {
     background-color: #121212; /* Dark background for the whole page */
     color: #ffffff; /* Light text for contrast */
-    min-height: 100%;
+    min-height: 100vh; 
     padding: 20px;
 }
 
