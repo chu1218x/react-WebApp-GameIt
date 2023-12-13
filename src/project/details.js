@@ -275,7 +275,7 @@ function Details() {
                                     <p>No reviews yet.</p>
                                 )
                             ) : (
-                                <p>Please <Link to="project/signin">login</Link> to view the content.</p>
+                                <p>Please login to view the content.</p>
                             )}
                         </div>
 
