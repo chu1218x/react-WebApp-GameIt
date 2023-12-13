@@ -9,6 +9,16 @@ export const findGames = async (page, pageSize) => {
     return response.data.results;
 };
 
+export const fetchLatestGames = async (page, pageSize) => {
+    try {
+        const response = await axios.get(`${RAWG_API}/games?key=${API_KEY}&ordering=-rating&page=${page}&page_size=${pageSize}`);
+        return response.data.results;
+    } catch (error) {
+        console.error("Error fetching latest games:", error);
+        throw error; 
+    }
+};
+
 export const searchGames = async (searchTerm) => {
     const response = await axios.get(`${RAWG_API}/games?key=${API_KEY}&search=${searchTerm}`);
     return response.data.results; 
