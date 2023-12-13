@@ -73,6 +73,10 @@ function Nav() {
                         )}
                         <Dropdown.Item as={Link} to="/project/gamelist">All Games</Dropdown.Item>
                         <Dropdown.Item as={Link} to="/project/creators">Creators</Dropdown.Item>
+                        <Dropdown.Item as={Link} to={isLoggedIn ? "/project/topreviews" : "/project/signin"}
+                            onClick={handleReviewClick}>
+                            Reviews
+                        </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 {isLoggedIn ? (
