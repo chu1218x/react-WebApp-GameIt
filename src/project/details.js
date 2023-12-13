@@ -254,26 +254,31 @@ function Details() {
 
                         <div className="reviews-container">
                             <h2>Reviews</h2>
-                            {reviews.length > 0 ? (
-                                <div>
-                                    {reviews.map((review, index) => (
-                                        <div key={index} className="user-info">
-                                            <div>
-                                                <strong>
-                                                    <Link to={`/project/users/${review.userId}`}>
-                                                        {review.username}
-                                                    </Link>
-                                                </strong> {''}
-                                                reviewed on {new Date(review.reviewDate).toLocaleDateString()}
-                                                <p>{review.text}</p>
+                            {currentUser ? (
+                                reviews.length > 0 ? (
+                                    <div>
+                                        {reviews.map((review, index) => (
+                                            <div key={index} className="user-info">
+                                                <div>
+                                                    <strong>
+                                                        <Link to={`/project/users/${review.userId}`}>
+                                                            {review.username}
+                                                        </Link>
+                                                    </strong> {''}
+                                                    reviewed on {new Date(review.reviewDate).toLocaleDateString()}
+                                                    <p>{review.text}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p>No reviews yet.</p>
+                                )
                             ) : (
-                                <p>No reviews yet.</p>
+                                <p>Please <Link to="project/signin">login</Link> to view the content.</p>
                             )}
                         </div>
+
 
                         <div className='add-review'>
                             {currentUser && currentUser.role === 'TESTER' && (
