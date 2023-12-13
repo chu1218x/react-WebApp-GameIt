@@ -13,6 +13,7 @@ function SignIn() {
             const credentials = { username, password };
             const user = await client.signIn(credentials);
             localStorage.setItem('currentUser', JSON.stringify(user));
+            window.dispatchEvent(new Event('loginStatusChanged'));
 
             navigate('/project');
         } catch (error) {
