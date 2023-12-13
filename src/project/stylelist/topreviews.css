@@ -1,0 +1,30 @@
+
+.user-reviews-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.1em; 
+}
+
+.user-reviews-list li {
+    margin-bottom: 15px; 
+}
+
+.review-username, .review-game-name {
+    color: rgb(11, 142, 98);
+    text-decoration: underline; 
+    font-weight: bold; 
+}
+
+.review-username:hover, .review-game-name:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.review-text {
+    font-style: italic;
+}
+
+.review-date {
+    color: #888;
+    font-size: 0.8em;
+}

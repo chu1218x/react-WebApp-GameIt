@@ -5,6 +5,14 @@ import './stylelist/nav.css'
 
 
 function Nav() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const currentUser = localStorage.getItem('currentUser');
+        setIsLoggedIn(!!currentUser);
+    }, []);
+
     return (
         <>
             <div className='nav-container col-2 d-none d-lg-block'>
@@ -37,6 +45,16 @@ function Nav() {
                         <Dropdown.Item as={Link} to="/project/creators">Creators</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
+                {isLoggedIn ? (
+                    <Link to="/project/topreviews" className="list-group-item list-group-item-action" >
+                        Reviews</Link>
+                ) : (
+                    <Link to="/project/signin" className="list-group-item list-group-item-action" onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/project/signin');
+                    }}>
+                        Reviews</Link>
+                )}
             </div>
         </>
     );

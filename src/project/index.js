@@ -11,6 +11,7 @@ import Home from './home';
 import SignIn from './users/signin';
 // import Account from './users/account';
 import Creators from './creators';
+import TopReviews from './topreviews';
 
 function Project() {
 
@@ -56,6 +57,7 @@ function Project() {
                         <Route path='/users' element={<UserList />} />
                         <Route path='/users/:userId' element={<UserDetails />} />
                         <Route path='/creators' element={<Creators />} />
+                        <Route path='/topreviews' element={<TopReviews />} />
                     </Routes>
                 </div>
             </div>
