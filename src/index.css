@@ -37,12 +37,12 @@ h2 {
 
 .col-2 {
     flex: 0 0 auto;
-    width: 16.66667%;
+    width: 10%;
 }
 
 .col-10 {
     flex: 0 0 auto;
-    width: 83.33333%;
+    width: 90%;
 }
 
 

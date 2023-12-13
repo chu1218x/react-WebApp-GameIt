@@ -235,42 +235,40 @@ function Details() {
                         </div>
                         <br />
                         <div className='likes-container'>
-                            <h2>likes By:</h2>
-                            <ul className="list-group">
+                            <h2>Likes By:</h2>
+                            <div>
                                 {likes.map((like, index) => (
-                                    <li key={index} className="list-group-item"  >
-                                        <Link to={`/project/users/${like.user._id}`} >
-                                            <p> {like.user.username} </p>
+                                    <div key={index} className="user-info">
+                                        <Link to={`/project/users/${like.user._id}`}>
+                                            <p className="user-name">{like.user.username}</p>
                                         </Link>
-                                    </li>
+                                    </div>
                                 ))}
-                            </ul>
-                        </ div>
-                        <br />
+                            </div>
+                        </div>
 
                         <div className="reviews-container">
                             <h2>Reviews</h2>
                             {reviews.length > 0 ? (
-                                <ul>
+                                <div>
                                     {reviews.map((review, index) => (
-                                        <li key={index}>
-                                            <p>
+                                        <div key={index} className="user-info">
+                                            <div>
                                                 <strong>
                                                     <Link to={`/project/users/${review.userId}`}>
                                                         {review.username}
                                                     </Link>
                                                 </strong> {''}
                                                 reviewed on {new Date(review.reviewDate).toLocaleDateString()}
-                                            </p>
-                                            <p>{review.text}</p>
-                                        </li>
+                                                <p>{review.text}</p>
+                                            </div>
+                                        </div>
                                     ))}
-                                </ul>
+                                </div>
                             ) : (
                                 <p>No reviews yet.</p>
                             )}
                         </div>
-
 
                         <div className='add-review'>
                             {currentUser && currentUser.role === 'TESTER' && (
