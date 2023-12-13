@@ -31,9 +31,10 @@ function Nav() {
         <>
             <div className='nav-container col-2 d-none d-lg-block'>
                 <div className="list-group">
-                    <Link to="/project" className="list-group-item list-group-item-action" >
-                        Home</Link>
-                        {!isLoggedIn && (
+                    <Link to="/project" className="list-group-item list-group-item-action">
+                        Home
+                    </Link>
+                    {!isLoggedIn && (
                         <>
                             <Link to="/project/signin" className="list-group-item list-group-item-action">
                                 Sign In
@@ -43,12 +44,12 @@ function Nav() {
                             </Link>
                         </>
                     )}
-                    {/* <Link to="/project/account" className="list-group-item list-group-item-action" >
-                    Account</Link> */}
-                    <Link to="/project/gamelist" className="list-group-item list-group-item-action" >
-                        All Games</Link>
-                    <Link to="/project/creators" className="list-group-item list-group-item-action" >
-                        Creators</Link>
+                    <Link to="/project/gamelist" className="list-group-item list-group-item-action">
+                        All Games
+                    </Link>
+                    <Link to="/project/creators" className="list-group-item list-group-item-action">
+                        Creators
+                    </Link>
                     <Link to={isLoggedIn ? "/project/topreviews" : "/project/signin"}
                         className="list-group-item list-group-item-action"
                         onClick={handleReviewClick}>
@@ -79,19 +80,10 @@ function Nav() {
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                {isLoggedIn ? (
-                    <Link to="/project/topreviews" className="list-group-item list-group-item-action" >
-                        Reviews</Link>
-                ) : (
-                    <Link to="/project/signin" className="list-group-item list-group-item-action" onClick={(e) => {
-                        e.preventDefault();
-                        navigate('/project/signin');
-                    }}>
-                        Reviews</Link>
-                )}
             </div>
         </>
     );
 }
 
 export default Nav;
+
