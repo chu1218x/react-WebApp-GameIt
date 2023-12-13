@@ -60,6 +60,8 @@ function UserDetails() {
     const signout = async () => {
         const status = await client.signOut();
         localStorage.removeItem('currentUser');
+        window.dispatchEvent(new Event('loginStatusChanged'));
+
         setCurrentUser(null);
         navigate('/project');
     }

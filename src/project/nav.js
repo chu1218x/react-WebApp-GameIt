@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import './stylelist/nav.css'
+import { useState, useEffect } from 'react';
 
 
 
@@ -8,10 +9,29 @@ function Nav() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     const currentUser = localStorage.getItem('currentUser');
+    //     setIsLoggedIn(!!currentUser);
+    // }, []);
+
     useEffect(() => {
-        const currentUser = localStorage.getItem('currentUser');
-        setIsLoggedIn(!!currentUser);
+        const updateLoginStatus = () => {
+            const currentUser = localStorage.getItem('currentUser');
+            setIsLoggedIn(!!currentUser);
+        };
+        window.addEventListener('loginStatusChanged', updateLoginStatus);
+        updateLoginStatus();
+        return () => {
+            window.removeEventListener('loginStatusChanged', updateLoginStatus);
+        };
     }, []);
+
+    const handleReviewClick = (e) => {
+        if (!isLoggedIn) {
+            e.preventDefault();
+            navigate('/project/signin');
+        }
+    };
 
     return (
         <>
@@ -29,7 +49,13 @@ function Nav() {
                         All Games</Link>
                     <Link to="/project/creators" className="list-group-item list-group-item-action" >
                         Creators</Link>
-                </div>            </div>
+                    <Link to={isLoggedIn ? "/project/topreviews" : "/project/signin"}
+                        className="list-group-item list-group-item-action"
+                        onClick={handleReviewClick}>
+                        Reviews
+                    </Link>
+                </div>
+            </div>
 
             <div className="dropdown-nav-menu d-lg-none">
                 <Dropdown>
@@ -45,16 +71,7 @@ function Nav() {
                         <Dropdown.Item as={Link} to="/project/creators">Creators</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                {isLoggedIn ? (
-                    <Link to="/project/topreviews" className="list-group-item list-group-item-action" >
-                        Reviews</Link>
-                ) : (
-                    <Link to="/project/signin" className="list-group-item list-group-item-action" onClick={(e) => {
-                        e.preventDefault();
-                        navigate('/project/signin');
-                    }}>
-                        Reviews</Link>
-                )}
+
             </div>
         </>
     );
