@@ -120,7 +120,7 @@ function UserDetails() {
 
             <div >
                 <h2>Favorite Games</h2>
-                <div className='game-card-container'>
+                <div className='game-card-container' style={{ display: 'flex', flexWrap: 'wrap' }}>
                     {likedGames.length > 0 ? (
                         likedGames.map(game => (
                             <GameCard key={game._id} game={{
