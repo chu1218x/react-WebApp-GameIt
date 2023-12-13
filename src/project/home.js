@@ -19,7 +19,6 @@ function Home() {
         const currentUser = localStorage.getItem('currentUser');
         setIsLoggedIn(!!currentUser);
 
-        fetchGames();
         if (currentUser) {
             fetchTopReviews();
         }
@@ -40,15 +39,19 @@ function Home() {
             console.error("Error fetching top reviews:", error);
         }
     };
-
-
-    const fetchGames = async () => {
-        const results = await client.findGames(currentPage, gamesPerPage);
-        setGames(results);
+    const loadLatestGames = async () => {
+        try {
+            // Use currentPage and gamesPerPage for fetching games
+            const latestGames = await client.fetchLatestGames(currentPage, gamesPerPage);
+            setGames(latestGames);
+        } catch (error) {
+            console.error("Failed to load latest games", error);
+        }
     };
 
+
     useEffect(() => {
-        fetchGames();
+        loadLatestGames();
         fetchTopReviews();
     },
         [currentPage]);
@@ -76,6 +79,47 @@ function Home() {
                 />
             </form>
             <br />
+
+            <h2>Top Rating Games</h2>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '50px', marginTop: "30px" }}>
+                {games.map(game => (
+                    <Link to={`/project/details/${game.id}`} key={game.id} className="game-card-link">
+                        <div className="game-card">
+                            <img src={game.background_image || "path_to_default_image.png"} alt={game.name} />
+                            <div className="game-card-title">
+                                <h2>{game.name}</h2>
+                            </div>
+                            <div className="game-card-info">
+                                <p>Released: {game.released}</p>
+                                <p>Genres: {formatGenres(game.genres)}</p>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+
+
+            <div style={{ textAlign: 'center' }}>
+                <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="btn btn-success me-2"
+                >
+                    Previous
+                </button>
+                <span>Page {currentPage}</span>
+                <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    className="btn btn-success"
+                >
+                    Next
+                </button>
+            </div>
+
+            <hr />
+
+
             <div className="user-reviews">
                 <h2>Top reviews</h2>
                 {isLoggedIn ? (
@@ -107,46 +151,10 @@ function Home() {
                     </>
                 ) : (
                     <p>You need to be <Link to="/project/signin" style={{ textDecoration: 'underline' }}>logged in</Link> to view the top reviews.</p>
-                    )}
+                )}
                 <hr />
             </ div>
 
-            <br />
-            <h2>All Games</h2>
-
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '50px', marginTop: "30px" }}>
-                {games.map(game => (
-                    <Link to={`/project/details/${game.id}`} key={game.id} className="game-card-link">
-                        <div className="game-card">
-                            <img src={game.background_image || "path_to_default_image.png"} alt={game.name} />
-                            <div className="game-card-title">
-                                <h2>{game.name}</h2>
-                            </div>
-                            <div className="game-card-info">
-                                <p>Released: {game.released}</p>
-                                <p>Genres: {formatGenres(game.genres)}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-            </div>
-
-
-            <div style={{ textAlign: 'center' }}>
-                <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="btn btn-primary me-2"
-                >
-                    Previous
-                </button>
-                <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    className="btn btn-primary"
-                >
-                    Next
-                </button>
-            </div>
         </div>
     );
 
