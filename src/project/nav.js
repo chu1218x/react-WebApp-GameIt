@@ -1,6 +1,5 @@
 import { Link,useNavigate } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import './stylelist/nav.css'
 import { useState, useEffect } from 'react';
 
 

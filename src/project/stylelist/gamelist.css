@@ -1,32 +1,32 @@
 .game-card {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center;    /* Center items on the cross axis */
-    width: 200px;           /* Set a fixed width for the cards */
-    margin: 10px;           /* Add some space around the cards */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add some shadow for depth */
-    position: relative; /* Needed to position the overlay absolutely */
+    flex-direction: column; 
+    align-items: center;   
+    width: 200px;           
+    margin: 10px;           
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    position: relative; 
     overflow: hidden;
   }
 
 .game-card img {
-    width: 100%;            /* Make image take up the full card width */
-    height: 300px;          /* Fix the image height */
-    object-fit: cover;      /* Ensure the image covers the area nicely */
-    border-bottom: 1px solid #ccc; /* Add a border between the image and the text */
-    transition: transform 0.3s ease; /* Smooth transition for the zoom effect */
+    width: 100%;           
+    height: 300px;          
+    object-fit: cover;      
+    border-bottom: 1px solid #ccc; 
+    transition: transform 0.3s ease; 
 
 }
 
 .game-card h2 {
-    font-size: 1.5em; /* Make the title larger */
-    color: #e6e6e6; /* A light grey color that will stand out against a darker background */
-    text-align: center; /* Center the title */
-    margin: 10px 0; /* Add some space around the title */
-    text-transform: uppercase; /* CAPITALIZE the title */
-    letter-spacing: 2px; /* Add more space between letters for a dramatic effect */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
-    transition: color 0.3s ease; /* Transition for hover effect */
+    font-size: 1.5em; 
+    color: #e6e6e6; 
+    text-align: center; 
+    margin: 10px 0; 
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+    transition: color 0.3s ease; 
 }
 
 
@@ -35,13 +35,13 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.75); /* Semi-transparent overlay */
+    background: rgba(0, 0, 0, 0.75); 
     color: rgb(255, 255, 255);
     text-align: center;
-    padding: 10px 0; /* Padding for the title bar */
-    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for the title */
-    transform: translateY(0); /* Start at normal position */
-    z-index: 2; /* Higher z-index to ensure title is above info initially */
+    padding: 10px 0; 
+    transition: transform 0.3s ease, opacity 0.3s ease; 
+    transform: translateY(0); 
+    z-index: 2; 
   }
   
 
@@ -50,29 +50,29 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    transform: translateY(100%); /* Hide the info below the card */
+    transform: translateY(100%); 
     transition: transform 0.3s ease, opacity 0.3s ease;
-    background: rgba(0, 0, 0, 0.9); /* Darker background for the info */
+    background: rgba(0, 0, 0, 0.9); 
     color: white;
-    opacity: 0; /* Start fully transparent */
-    visibility: hidden; /* Start hidden */
+    opacity: 0; 
+    visibility: hidden; 
     padding: 20px;
-    z-index: 1; /* Lower z-index to have info below title initially */
+    z-index: 1; 
   }
 
   .game-card:hover .game-card-title {
-    transform: translateY(-100%); /* Slide out of view */
-    opacity: 0; /* Make title fully transparent */
-    visibility: hidden; /* Hide title to prevent it from being clickable */
+    transform: translateY(-100%); 
+    opacity: 0; 
+    visibility: hidden; 
   }
   
   .game-card:hover .game-card-info {
-    transform: translateY(0); /* Slide into view */
+    transform: translateY(0); 
     opacity: 1;
     visibility: visible;
-    z-index: 3; /* Raise z-index to bring info above the title */
+    z-index: 3; 
   }
 
 .game-card:hover img {
-    transform: scale(1.1); /* Zoom in */
+    transform: scale(1.1); 
 }

@@ -203,29 +203,34 @@ function Details() {
                         </button>
                         {showSignInPrompt && <p className="text-danger">This Action Requires Sign In First</p>}
 
-                        <br />
-                        <h3>Description</h3>
-                        <div>
-                            {showFullDescription ? (
-                                <div dangerouslySetInnerHTML={{ __html: gameDetails.description }} />
-                            ) : (
-                                <div dangerouslySetInnerHTML={{ __html: gameDetails.description.slice(0, 200) + '...' }} />
-                            )}
-                            <button className='btn btn-success'
+                        <div className="additionalDetails">
+                            <p><i className="fa fa-calendar-alt"></i> Released: {gameDetails.released}</p>
+                            <p><i className="fa fa-star"></i> Rating: {gameDetails.rating}</p>
+                            <p><i className="fa fa-gamepad"></i> Platforms: {gameDetails.platforms.map(platform => platform.platform.name).join(', ')}</p>
+                            <p><i className="fa fa-code-branch"></i> Developers: {gameDetails.developers.map(developer => developer.name).join(', ')}</p>
+                            <p><i className="fa fa-tags"></i> Genres: {gameDetails.genres.map(genre => genre.name).join(', ')}</p>
+                            <p><i className="fa fa-hashtag"></i> Tags: {gameDetails.tags.map(tag => tag.name).join(', ')}</p>
+                            <p><i className="fa fa-briefcase"></i> Publishers: {gameDetails.publishers.map(publisher => publisher.name).join(', ')}</p>
+                        </div>
+
+                        <hr />
+                        <div className="descriptionContainer">
+                            <h3>About </h3>
+                            <div className="gameDescription" aria-expanded={showFullDescription}>
+                                {showFullDescription ? (
+                                    <div dangerouslySetInnerHTML={{ __html: gameDetails.description }} />
+                                ) : (
+                                    <div dangerouslySetInnerHTML={{ __html: gameDetails.description.slice(0, 200) + '...' }} />
+                                )}
+                            </div>
+                            <button className='toggleDescription'
                                 onClick={() => setShowFullDescription(!showFullDescription)}>
                                 {showFullDescription ? 'Read Less' : 'Read More'}
+                                <i className={`fas ${showFullDescription ? 'fa-angle-up' : 'fa-angle-down'}`}></i>
                             </button>
                         </div>
-                        <br />
-                        <p>Released: {gameDetails.released}</p>
-                        <p>Rating: {gameDetails.rating}</p>
-                        <p>Platforms: {gameDetails.platforms.map(platform => platform.platform.name).join(', ')}</p>
-                        <p>Developers: {gameDetails.developers.map(developer => developer.name).join(', ')}</p>
-                        <p>Genres: {gameDetails.genres.map(genre => genre.name).join(', ')}</p>
-                        <p>Tags: {gameDetails.tags.map(tag => tag.name).join(', ')}</p>
-                        <p>Publishers: {gameDetails.publishers.map(publisher => publisher.name).join(', ')}</p>
-
                     </div>
+
 
                     <div className="rightColumn">
                         <div className="gameScreenshots">
@@ -272,27 +277,31 @@ function Details() {
 
                         <div className='add-review'>
                             {currentUser && currentUser.role === 'TESTER' && (
-                                <button className="btn btn-primary" onClick={handleReviewClick}>
+                                <button className="btn btn-primary" onClick={() => setShowReviewForm(true)}>
                                     Add Review
                                 </button>
                             )}
                             {showReviewForm && (
-                                <div className="review-form">
-                                    <h3>Add a Review</h3>
-                                    <textarea
-                                        placeholder="Write your review here..."
-                                        value={reviewText}
-                                        onChange={(e) => setReviewText(e.target.value)}
-                                    />
-                                    <button className="btn btn-success"
-                                        onClick={handleSubmitReview}>Submit Review</button>
-                                    <button className="btn btn-secondary"
-                                        onClick={() => setShowReviewForm(false)}>Cancel</button>
+                                <div className="review-modal">
+                                    <div className="review-form">
+                                        <h3>Add a Review</h3>
+                                        <textarea
+                                            className="review-textarea"
+                                            placeholder="Write your review here..."
+                                            value={reviewText}
+                                            onChange={(e) => setReviewText(e.target.value)}
+                                        />
+                                        <div className="review-form-buttons">
+                                            <button className="btn btn-success"
+                                                onClick={handleSubmitReview}>Submit Review</button>
+                                            <button className="btn btn-secondary"
+                                                onClick={() => setShowReviewForm(false)}>Cancel</button>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
-
-
                         </div>
+
 
                     </div>
 

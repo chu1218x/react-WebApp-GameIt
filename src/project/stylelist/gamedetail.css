@@ -55,3 +55,74 @@
   list-style-type: none; 
   padding-left: 10px; 
 }
+
+
+.review-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  z-index: 1000;
+  width: 60%; 
+  max-width: 800px; 
+}
+
+
+.review-form h3 {
+  margin-bottom: 20px;
+}
+
+.review-textarea {
+  width: 100%; 
+  height: 300px; 
+  margin-bottom: 20px;
+  padding: 15px; 
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem; 
+  line-height: 1.5; 
+}
+
+.review-form-buttons {
+  text-align: right;
+}
+
+.review-form-buttons button {
+  margin-left: 10px;
+}
+
+
+.descriptionContainer {
+  margin-bottom: 1em;
+}
+
+.gameDescription {
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  /* Adjust max-height to the content */
+  max-height: 500px; /* Example max-height when expanded */
+}
+
+.gameDescription[aria-expanded="false"] {
+  max-height: 100px; /* Example max-height when collapsed */
+}
+
+.toggleDescription {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 0.5em;
+  padding: 0;
+}
+
+.toggleDescription i {
+  margin-left: 0.3em;
+}
+
+
