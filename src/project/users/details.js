@@ -4,6 +4,7 @@ import * as client from './client';
 import * as likesClient from "../likes/client"
 import { useState, useEffect } from 'react';
 import GameCard from '../gamecard';
+import axios from 'axios';
 
 function UserDetails() {
     const [user, setUser] = useState(null);
@@ -15,6 +16,17 @@ function UserDetails() {
     const [currentUser, setCurrentUser] = useState(null);
     const [editMode, setEditMode] = useState(false);
 
+    const [userReviews, setUserReviews] = useState([]);
+
+    const fetchUserReviews = async () => {
+        try {
+            const response = await axios.get
+                (`http://localhost:4000/api/testers/reviews/user/${userId}`);
+            setUserReviews(response.data);
+        } catch (error) {
+            console.error("Error fetching user reviews:", error);
+        }
+    };
 
     useEffect(() => {
         const loggedInUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -62,6 +74,7 @@ function UserDetails() {
     useEffect(() => {
         fetchUser();
         fetchLikedGames();
+        fetchUserReviews();
     }, [userId]);
 
 
@@ -117,6 +130,24 @@ function UserDetails() {
                 </div>
             )}
             <br />
+
+            {user && user.role === 'TESTER' && (
+                <div>
+                    <h2>Reviewed Games:</h2>
+                    <ul>
+                        {userReviews.map((review, index) => (
+                            <li key={index}>
+                                <Link to={`/project/details/${review.gameId}`}>
+                                    {review.gameName}
+                                </Link> - {review.text}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+
+
 
             <div >
                 <h2>Favorite Games</h2>

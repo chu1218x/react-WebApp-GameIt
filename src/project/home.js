@@ -3,13 +3,43 @@ import { useState, useEffect } from 'react';
 import * as client from './client';
 import { useNavigate, Link } from 'react-router-dom';
 import "../project/stylelist/gamelist.css";
+import axios from 'axios';
 
-function GameList() {
+function Home() {
     const [games, setGames] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [gamesPerPage] = useState(20);
+    const [gamesPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
     const navigate = useNavigate();
+    const [topReviews, setTopReviews] = useState([]);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const currentUser = localStorage.getItem('currentUser');
+        setIsLoggedIn(!!currentUser);
+
+        fetchGames();
+        if (currentUser) {
+            fetchTopReviews();
+        }
+    }, [currentPage]);
+
+
+    const processAndSortReviews = (testers) => {
+        const reviews = testers.flatMap(tester => tester.reviews);
+        return reviews.sort((a, b) => new Date(b.reviewDate) - new Date(a.reviewDate));
+    };
+
+    const fetchTopReviews = async () => {
+        try {
+            const response = await axios.get('http://localhost:4000/api/testers');
+            const sortedReviews = processAndSortReviews(response.data);
+            setTopReviews(sortedReviews);
+        } catch (error) {
+            console.error("Error fetching top reviews:", error);
+        }
+    };
 
 
     const fetchGames = async () => {
@@ -19,6 +49,7 @@ function GameList() {
 
     useEffect(() => {
         fetchGames();
+        fetchTopReviews();
     },
         [currentPage]);
 
@@ -44,6 +75,42 @@ function GameList() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </form>
+            <br />
+            <div className="user-reviews">
+                <h2>Top reviews</h2>
+                {isLoggedIn ? (
+                    <>
+                        <ul className="user-reviews-list">
+                            {topReviews.slice(0, 3).map((review, index) => (
+                                <li key={index}>
+                                    <Link to={`/project/users/${review.userId}`} className="review-username">
+                                        {review.username}
+                                    </Link>
+                                    &nbsp;reviewed&nbsp;
+                                    <Link to={`/project/details/${review.gameId}`} className="review-game-name">
+                                        {review.gameName}
+                                    </Link>
+                                    :&nbsp;
+                                    <span className="review-text">
+                                        "{review.text}"
+                                    </span>
+                                    <br />
+                                    <span className="review-date">
+                                        {new Date(review.reviewDate).toLocaleString()}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                        <div className="see-more">
+                            <Link to="/project/topreviews">See more</Link>
+                        </div>
+                    </>
+                ) : (
+                    <p>You need to be <Link to="/project/signin" style={{ textDecoration: 'underline' }}>logged in</Link> to view the top reviews.</p>
+                    )}
+                <hr />
+            </ div>
+
             <br />
             <h2>All Games</h2>
 
@@ -85,4 +152,4 @@ function GameList() {
 
 }
 
-export default GameList;
+export default Home;
