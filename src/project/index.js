@@ -9,6 +9,7 @@ import UserList from './users/list';
 import UserDetails from './users/details';
 import Home from './home';
 import SignIn from './users/signin';
+import Account from './users/account';
 import Creators from './creators';
 
 function Project() {
@@ -47,7 +48,7 @@ function Project() {
                         <Route path="/" element={<Home />} />
                         <Route path="/signin" element={<SignIn />} />
                         <Route path="/signup" element={<Signup />} />
-                        {/* <Route path="/account" element={<Account />} /> */}
+                        <Route path="/account" element={<Account />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/search/:search" element={<Search />} />
                         <Route path="/details/:gameId" element={<Deatils />} />

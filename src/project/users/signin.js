@@ -1,5 +1,5 @@
 import * as client from './client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
