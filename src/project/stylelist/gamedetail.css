@@ -44,3 +44,8 @@
   width: 100%;
   height: auto; 
 }
+
+.reviews-container ul {
+  list-style-type: none; 
+  padding-left: 0; 
+}
