@@ -32,7 +32,7 @@ function Home() {
 
     const fetchTopReviews = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/testers');
+            const response = await axios.get('https://game-it-0dzm.onrender.com/api/testers');
             const sortedReviews = processAndSortReviews(response.data);
             setTopReviews(sortedReviews);
         } catch (error) {

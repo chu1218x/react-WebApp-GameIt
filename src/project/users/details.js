@@ -21,7 +21,7 @@ function UserDetails() {
     const fetchUserReviews = async () => {
         try {
             const response = await axios.get
-                (`http://localhost:4000/api/testers/reviews/user/${userId}`);
+                (`https://game-it-0dzm.onrender.com/api/testers/reviews/user/${userId}`);
             setUserReviews(response.data);
         } catch (error) {
             console.error("Error fetching user reviews:", error);

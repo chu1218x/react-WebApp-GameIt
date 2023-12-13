@@ -28,7 +28,7 @@ function Details() {
     const fetchReviews = async () => {
         try {
             const response = await axios.get
-                (`http://localhost:4000/api/testers/reviews/${gameId}`);
+                (`https://game-it-0dzm.onrender.com/api/testers/reviews/${gameId}`);
             setReviews(response.data);
         } catch (error) {
             console.error("Error fetching reviews:", error);
@@ -58,7 +58,7 @@ function Details() {
         };
         try {
             const response = await axios.post
-                ('http://localhost:4000/api/testers/review', reviewData);
+                ('https://game-it-0dzm.onrender.com/api/testers/review', reviewData);
 
             if (response.data) {
                 const newReview = {
